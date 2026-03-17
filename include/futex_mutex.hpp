@@ -2,8 +2,6 @@
 
 #include <atomic>
 #include <cerrno>
-#include <chrono>
-#include <cstdint>
 #include <linux/futex.h>
 #include <stdexcept>
 #include <sys/syscall.h>
@@ -17,15 +15,11 @@ public:
     FutexMutex& operator=(const FutexMutex&) = delete;
 
     void lock() {
-        int expected = kUnlocked;
-        if (state_.compare_exchange_strong(
-                expected,
-                kLockedNoWaiters,
-                std::memory_order_acquire,
-                std::memory_order_relaxed)) {
+        if (try_lock()) {
             return;
         }
 
+        int expected = kLockedNoWaiters;
         lock_slow(expected);
     }
 
@@ -39,12 +33,11 @@ public:
     }
 
     void unlock() {
-        const int previous = state_.fetch_sub(1, std::memory_order_release);
+        const int previous = state_.exchange(kUnlocked, std::memory_order_release);
         if (previous == kLockedNoWaiters) {
             return;
         }
 
-        state_.store(kUnlocked, std::memory_order_release);
         futex_wake_one();
     }
 
