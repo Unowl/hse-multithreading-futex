@@ -1,0 +1,81 @@
+# Compiled Object files
+
+*.o
+*.obj
+*.lo
+*.slo
+
+# Precompiled Headers
+
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+
+*.exe
+*.out
+*.app
+
+# Build directories
+
+build/
+build-release/
+cmake-build*/
+CMakeFiles/
+CMakeCache.txt
+compile_commands.json
+Makefile
+cmake_install.cmake
+install_manifest.txt
+
+# CMake
+
+*.cmake
+
+# Logs
+
+*.log
+
+# Debug files
+
+*.dSYM/
+*.stackdump
+
+# Editor folders
+
+.vscode/
+.idea/
+
+# OS files
+
+.DS_Store
+Thumbs.db
+
+# Temporary files
+
+*.tmp
+*.temp
+*~
+
+# Coverage
+
+*.gcno
+*.gcda
+*.gcov
+
+# Profiling
+
+gmon.out
